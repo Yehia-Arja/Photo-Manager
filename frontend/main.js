@@ -3,6 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import * as photoManager from './photoManager.js'
 
+
 const fileName = fileURLToPath(import.meta.url);
 const dirName = path.dirname(fileName);
 
@@ -21,8 +22,9 @@ const createWindow = () => {
 app.whenReady().then(() => {
     createWindow();
 
+    ipcMain.handle('photos:getPath', async () => photoManager.getPath());
     ipcMain.handle('photos:get', async () => photoManager.getPhotos());
-    ipcMain.handle('photos:save', async (event, photo) => photoManager.savePhoto(photo));
+    ipcMain.handle('photos:add', async (event, photo) => photoManager.addPhoto(photo));
     ipcMain.handle('photos:delete', async (event, photo) => photoManager.deletePhoto(photo));
 
 });

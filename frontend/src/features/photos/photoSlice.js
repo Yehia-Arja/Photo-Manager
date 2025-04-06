@@ -11,9 +11,8 @@ const photoSlice = createSlice({
     name: 'photos',
     initialState,
     reducers: {
-        getPhotosStart: (state, action) => {
+        load: (state) => {
             state.loading = true;
-            state.photos = action.payload;
         },
         getPhotosSuccess: (state, action) => {
             state.loading = false;
@@ -33,7 +32,7 @@ const photoSlice = createSlice({
 })
 
 export const {
-    getPhotosStart, 
+    load, 
     getPhotosSuccess, 
     getPhotosFailure, 
     addPhoto, 
