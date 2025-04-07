@@ -1,14 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import { app } from 'electron';
+import { dialog } from 'electron';
 
 const photosDir = path.join(app.getPath('userData'), 'photos');
 
 if (!fs.existsSync(photosDir)) {
-  fs.mkdirSync(photosDir, { recursive: true });
+    fs.mkdirSync(photosDir, { recursive: true });
 }
 
-export const readPhotos = () => {
+export const getPhotos = () => {
     try {
         const files = fs.readdirSync(photosDir);
         return files.map(file => path.join(photosDir, file));
@@ -18,11 +19,16 @@ export const readPhotos = () => {
     }
 }
 
-export const savePhoto = (photo) => {
+export const addPhoto = (photo) => {
     try {
-        const destination = path.join(photosDir, path.basename(photo));
+        
+        const originalName = path.basename(photo);
+        const now = Date.now();
+        const newName = `${now}-${originalName}`;
+        const destination = path.join(photosDir, newName);        
         fs.copyFileSync(photo, destination);
         return destination;
+
     } catch (error) {
         console.error('Error saving photo:', error);
         throw error;
@@ -37,3 +43,11 @@ export const deletePhoto = (photo) => {
         throw error;
     }
 }
+
+export const getPath = async () => {
+    const result = await dialog.showOpenDialog({
+        properties: ['openFile'],
+        filters: [{ name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif'] }],
+    });
+    return result.canceled ? null : result.filePaths[0];
+};
