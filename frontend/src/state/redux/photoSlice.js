@@ -18,11 +18,18 @@ const photoSlice = createSlice({
                 loading: true,
             }
         },
-        getPhotosSuccess: (current, action) => {
+        getPhotos: (current, action) => {
             return {
                 ...current,
                 loading: false,
                 photos: action.payload,
+            }
+        },
+        getRecentlyDeletedPhotos: (current, action) => {
+            return {
+                ...current,
+                loading: false,
+                recentlyDeleted: action.payload,
             }
         },
         failure: (current, action) => {
@@ -63,7 +70,8 @@ const photoSlice = createSlice({
 
 export const {
     load, 
-    getPhotosSuccess, 
+    getPhotos, 
+    getRecentlyDeletedPhotos,
     failure, 
     addPhoto, 
     softDelete,

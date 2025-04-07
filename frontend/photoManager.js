@@ -7,6 +7,11 @@ import { dialog } from 'electron';
 const photosDir = path.join(app.getPath('userData'), `photos`);
 const deletedDir = path.join(app.getPath('userData'), 'recently_deleted');
 
+const dirs = {
+    photos: photosDir,
+    deleted: deletedDir,
+}
+
 if (!fs.existsSync(deletedDir)) {
     fs.mkdirSync(deletedDir, { recursive: true });
 }
@@ -15,10 +20,12 @@ if (!fs.existsSync(photosDir)) {
     fs.mkdirSync(photosDir, { recursive: true });
 }
 
-export const getPhotos = () => {
+export const getPhotos = (type) => {
     try {
-        const files = fs.readdirSync(photosDir);
-        return files.map(file => path.join(photosDir, file));
+        const dir = dirs[type] ?? null;
+        !dir && console.error('Invalid directory type:', type);
+        const files = fs.readdirSync(dir);
+        return files.map(file => path.join(dir, file));
     }catch (error) {
         console.error('Error reading photos:', error);
         return [];

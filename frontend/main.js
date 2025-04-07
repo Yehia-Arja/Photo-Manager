@@ -23,7 +23,7 @@ app.whenReady().then(() => {
     createWindow();
   
     ipcMain.handle('photos:getPath', async () => photoManager.getPath());
-    ipcMain.handle('photos:get', async () => photoManager.getPhotos());
+    ipcMain.handle('photos:get', async (event,type) => photoManager.getPhotos(type));
     ipcMain.handle('photos:add', async (event,photo) => photoManager.addPhoto(photo));
     ipcMain.handle('photos:softDelete', async (event,photo) => photoManager.softDelete(photo));
     ipcMain.handle('photos:restore', async (event,photo) => photoManager.restorePhoto(photo));

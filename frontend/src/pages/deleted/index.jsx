@@ -6,11 +6,11 @@ const Deleted = () => {
     const { recentlyDeleted, handleRestorePhoto, handleDeletePhoto } = useDeletedLogic();
     return (
         <div>
-            {recentlyDeleted.map((photo, index) => (
+            {recentlyDeleted.map((photoPath, index) => (
                 <div key={index} className="photo-item">
-                    <img src={photo} alt={`Deleted ${index}`} className="photo" />
-                    <button onClick={() => handleRestorePhoto(photo)}>Restore</button>
-                    <button onClick={() => handleDeletePhoto(photo)}>Delete</button>
+                    <img src={photoPath} alt={`Deleted ${index}`} className="photo" />
+                    <button onClick={() => handleRestorePhoto(photoPath)}>Restore</button>
+                    <button onClick={() => handleDeletePhoto(photoPath)}>Delete</button>
                 </div>
             ))}
         </div>

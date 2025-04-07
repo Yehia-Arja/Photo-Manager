@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
     load,
-    getPhotosSuccess, 
+    getPhotos, 
     failure, 
     addPhoto, 
     softDelete,
@@ -15,8 +15,8 @@ const useHomeLogic = () => {
     const handleGetPhotos = async () => {
         dispatch(load());
         try {
-            const photosData = await window.electronAPI.getPhotos();
-            dispatch(getPhotosSuccess(photosData));
+            const photosData = await window.electronAPI.getPhotos('photos');
+            dispatch(getPhotos(photosData));
         } catch (error) {
             dispatch(failure(error.message));
         }
@@ -33,7 +33,6 @@ const useHomeLogic = () => {
             if (!filePath) return;
             console.log("Adding photo:", filePath);
             const newPhoto = await window.electronAPI.addPhoto(filePath);
-            console.log("New photo added:", newPhoto);
             dispatch(addPhoto(newPhoto));
         } catch (error) {
             dispatch(failure(error.message));

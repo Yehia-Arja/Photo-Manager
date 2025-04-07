@@ -3,7 +3,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
     getPath: () => ipcRenderer.invoke('photos:getPath'),
-    getPhotos: () => ipcRenderer.invoke('photos:get'),
+    getPhotos: (type) => ipcRenderer.invoke('photos:get', type),
     addPhoto: (sourceFilePath) => ipcRenderer.invoke('photos:add', sourceFilePath),
     softDelete: (photoPath) => ipcRenderer.invoke('photos:softDelete', photoPath),
     restorePhoto: (photoPath) => ipcRenderer.invoke('photos:restore', photoPath),
