@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import {
     load,
     getPhotosSuccess, 
-    getPhotosFailure, 
+    failure, 
     addPhoto, 
-    deletePhoto 
+    softDelete,
 } from "../../state/redux/photoSlice.js";   
 
 const useHomeLogic = () => {
@@ -18,7 +18,7 @@ const useHomeLogic = () => {
             const photosData = await window.electronAPI.getPhotos();
             dispatch(getPhotosSuccess(photosData));
         } catch (error) {
-            dispatch(getPhotosFailure(error.message));
+            dispatch(failure(error.message));
         }
     };
 
@@ -33,19 +33,20 @@ const useHomeLogic = () => {
             if (!filePath) return;
             console.log("Adding photo:", filePath);
             const newPhoto = await window.electronAPI.addPhoto(filePath);
+            console.log("New photo added:", newPhoto);
             dispatch(addPhoto(newPhoto));
         } catch (error) {
-            console.error("Error adding photo:", error);
+            dispatch(failure(error.message));
         }
     };
 
-    const handleDeletePhoto = async (photoPath) => {
+    const handleSoftDelete = async (photoPath) => {
         dispatch(load());
         try {
-            await window.electronAPI.deletePhoto(photoPath);
-            dispatch(deletePhoto(photoPath));
+            const newPath = await window.electronAPI.softDelete(photoPath);
+            dispatch(softDelete({newPath,photoPath}));
         } catch (error) {
-            console.error("Error deleting photo:", error);
+            dispatch(failure(error.message));
         }
     };
 
@@ -55,7 +56,7 @@ const useHomeLogic = () => {
         error,
         handleGetPhotos,
         handleAddPhoto,
-        handleDeletePhoto,
+        handleSoftDelete,
     };
 };
 

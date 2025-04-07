@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     photos: [],
+    recentlyDeleted: [],
     loading: false,
     error: null,
 }
@@ -24,7 +25,7 @@ const photoSlice = createSlice({
                 photos: action.payload,
             }
         },
-        getPhotosFailure: (current, action) => {
+        failure: (current, action) => {
             return {
                 ...current,
                 loading: false,
@@ -37,10 +38,24 @@ const photoSlice = createSlice({
                 photos: [...current.photos, action.payload],
             }
         },
+        softDelete: (current, action) => {
+            return {
+                ...current,
+                photos: current.photos.filter(photo => photo !== action.payload.photoPath),
+                recentlyDeleted: [...current.recentlyDeleted, action.payload.newPath],
+            }
+        },
+        restorePhoto: (current, action) => {
+            return {
+                ...current,
+                recentlyDeleted: current.recentlyDeleted.filter(photo => photo !== action.payload.photoPath),
+                photos: [...current.photos, action.payload.newPath],
+            }
+        },
         deletePhoto: (current, action) => {
             return {
                 ...current,
-                photos: current.photos.filter(photo => photo !== action.payload),
+                recentlyDeleted: current.recentlyDeleted.filter(photo => photo !== action.payload),
             }
         },
     }
@@ -49,8 +64,10 @@ const photoSlice = createSlice({
 export const {
     load, 
     getPhotosSuccess, 
-    getPhotosFailure, 
+    failure, 
     addPhoto, 
+    softDelete,
+    restorePhoto,
     deletePhoto 
 } = photoSlice.actions;
 

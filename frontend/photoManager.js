@@ -3,7 +3,13 @@ import path from 'path';
 import { app } from 'electron';
 import { dialog } from 'electron';
 
-const photosDir = path.join(app.getPath('userData'), 'photos');
+
+const photosDir = path.join(app.getPath('userData'), `photos`);
+const deletedDir = path.join(app.getPath('userData'), 'recently_deleted');
+
+if (!fs.existsSync(deletedDir)) {
+    fs.mkdirSync(deletedDir, { recursive: true });
+}
 
 if (!fs.existsSync(photosDir)) {
     fs.mkdirSync(photosDir, { recursive: true });
@@ -19,14 +25,14 @@ export const getPhotos = () => {
     }
 }
 
-export const addPhoto = (photo) => {
+export const addPhoto = (photoPath) => {
     try {
         
-        const originalName = path.basename(photo);
+        const originalName = path.basename(photoPath);
         const now = Date.now();
         const newName = `${now}-${originalName}`;
         const destination = path.join(photosDir, newName);        
-        fs.copyFileSync(photo, destination);
+        fs.copyFileSync(photoPath, destination);
         return destination;
 
     } catch (error) {
@@ -35,9 +41,33 @@ export const addPhoto = (photo) => {
     }
 }
 
-export const deletePhoto = (photo) => {
+export const softDelete = (photoPath) => {
     try {
-        fs.unlinkSync(photo);
+        const photoName = path.basename(photoPath);
+        const destination = path.join(deletedDir, photoName);
+        fs.renameSync(photoPath, destination);
+        return destination;
+    } catch (error) {
+        console.error('Error moving photo to recently deleted folder:', error);
+        throw error;
+    }
+}
+
+export const restorePhoto = (photoPath) => {
+    try {
+        const photoName = path.basename(photoPath);
+        const destination = path.join(photosDir, photoName);
+        fs.renameSync(photoPath, destination);
+        return destination;
+    } catch (error) {
+        console.error('Error restoring photo:', error);
+        throw error;
+    }
+}
+
+export const deletePhoto = (photoPath) => {
+    try {
+        fs.unlinkSync(photoPath);
     } catch (error) {
         console.error('Error deleting photo:', error);
         throw error;

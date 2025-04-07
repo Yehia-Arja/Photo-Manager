@@ -1,18 +1,21 @@
 import useHomeLogic from "./useHomeLogic"
+import { Link } from "react-router-dom"
+
 const Home = () => {
-    const { photos, handleAddPhoto, handleDeletePhoto } = useHomeLogic()
+    const { photos, handleAddPhoto, handleSoftDelete } = useHomeLogic()
 
     return (
         <div>
-           {photos.map((photo, index) => (
+            {console.log("Photos:", photos)}
+           {photos.map((photoPath, index) => (
                 <div key={index} className="photo-item">
-                    <img src={photo} alt={`Photo ${index}`} className="photo" />
-                    <button onClick={() => handleDeletePhoto(photo)}>Delete</button>
+                    <img src={photoPath} alt={`Photo ${index}`} className="photo" />
+                    <button onClick={() => handleSoftDelete(photoPath)}>Delete</button>
                 </div>
            ))}
         
             <button onClick={handleAddPhoto}>Add Photo</button>
-            
+            <Link to="/deleted">Recently Deleted</Link>
         </div>
     )
 }
