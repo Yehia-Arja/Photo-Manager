@@ -6,7 +6,7 @@ import {
     getPhotosFailure, 
     addPhoto, 
     deletePhoto 
-} from "../../features/photos/photoSlice"; 
+} from "../../state/redux/photoSlice.js";   
 
 const useHomeLogic = () => {
     const { photos, loading, error } = useSelector((state) => state.photos);

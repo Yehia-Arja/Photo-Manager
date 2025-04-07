@@ -1,11 +1,11 @@
-import photoReducer from '../features/photos/photoSlice';
+import photoSlice from './photoSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 
 
 const store = configureStore({
     reducer: {
-        photos: photoReducer,
+        photos: photoSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });
