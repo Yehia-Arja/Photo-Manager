@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     photos: [],
+    recentlyDeleted: [],
     loading: false,
     error: null,
 }
@@ -17,14 +18,21 @@ const photoSlice = createSlice({
                 loading: true,
             }
         },
-        getPhotosSuccess: (current, action) => {
+        getPhotos: (current, action) => {
             return {
                 ...current,
                 loading: false,
                 photos: action.payload,
             }
         },
-        getPhotosFailure: (current, action) => {
+        getRecentlyDeletedPhotos: (current, action) => {
+            return {
+                ...current,
+                loading: false,
+                recentlyDeleted: action.payload,
+            }
+        },
+        failure: (current, action) => {
             return {
                 ...current,
                 loading: false,
@@ -37,10 +45,24 @@ const photoSlice = createSlice({
                 photos: [...current.photos, action.payload],
             }
         },
+        softDelete: (current, action) => {
+            return {
+                ...current,
+                photos: current.photos.filter(photo => photo !== action.payload.photoPath),
+                recentlyDeleted: [...current.recentlyDeleted, action.payload.newPath],
+            }
+        },
+        restorePhoto: (current, action) => {
+            return {
+                ...current,
+                recentlyDeleted: current.recentlyDeleted.filter(photo => photo !== action.payload.photoPath),
+                photos: [...current.photos, action.payload.newPath],
+            }
+        },
         deletePhoto: (current, action) => {
             return {
                 ...current,
-                photos: current.photos.filter(photo => photo !== action.payload),
+                recentlyDeleted: current.recentlyDeleted.filter(photo => photo !== action.payload),
             }
         },
     }
@@ -48,9 +70,12 @@ const photoSlice = createSlice({
 
 export const {
     load, 
-    getPhotosSuccess, 
-    getPhotosFailure, 
+    getPhotos, 
+    getRecentlyDeletedPhotos,
+    failure, 
     addPhoto, 
+    softDelete,
+    restorePhoto,
     deletePhoto 
 } = photoSlice.actions;
 

@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
     load,
-    getPhotosSuccess, 
-    getPhotosFailure, 
+    getPhotos, 
+    failure, 
     addPhoto, 
-    deletePhoto 
+    softDelete,
 } from "../../state/redux/photoSlice.js";   
 
 const useHomeLogic = () => {
@@ -15,10 +15,10 @@ const useHomeLogic = () => {
     const handleGetPhotos = async () => {
         dispatch(load());
         try {
-            const photosData = await window.electronAPI.getPhotos();
-            dispatch(getPhotosSuccess(photosData));
+            const photosData = await window.electronAPI.getPhotos('photos');
+            dispatch(getPhotos(photosData));
         } catch (error) {
-            dispatch(getPhotosFailure(error.message));
+            dispatch(failure(error.message));
         }
     };
 
@@ -35,17 +35,17 @@ const useHomeLogic = () => {
             const newPhoto = await window.electronAPI.addPhoto(filePath);
             dispatch(addPhoto(newPhoto));
         } catch (error) {
-            console.error("Error adding photo:", error);
+            dispatch(failure(error.message));
         }
     };
 
-    const handleDeletePhoto = async (photoPath) => {
+    const handleSoftDelete = async (photoPath) => {
         dispatch(load());
         try {
-            await window.electronAPI.deletePhoto(photoPath);
-            dispatch(deletePhoto(photoPath));
+            const newPath = await window.electronAPI.softDelete(photoPath);
+            dispatch(softDelete({newPath,photoPath}));
         } catch (error) {
-            console.error("Error deleting photo:", error);
+            dispatch(failure(error.message));
         }
     };
 
@@ -55,7 +55,7 @@ const useHomeLogic = () => {
         error,
         handleGetPhotos,
         handleAddPhoto,
-        handleDeletePhoto,
+        handleSoftDelete,
     };
 };
 
