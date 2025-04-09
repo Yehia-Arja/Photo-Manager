@@ -1,9 +1,9 @@
 import React from 'react';
-import useDeletedLogic from './useDeletedLogic.js';
+import useRecentlyDeletedLogic from './useRecentlyDeletedLogic';
+import { Link } from 'react-router-dom';    
 
-
-const Deleted = () => {
-    const { recentlyDeleted, handleRestorePhoto, handleDeletePhoto } = useDeletedLogic();
+const RecentlyDeleted = () => {
+    const { recentlyDeleted, handleRestorePhoto, handleDeletePhoto } = useRecentlyDeletedLogic();
     return (
         <div>
             {recentlyDeleted.map((photoPath, index) => (
@@ -13,8 +13,9 @@ const Deleted = () => {
                     <button onClick={() => handleDeletePhoto(photoPath)}>Delete</button>
                 </div>
             ))}
-        </div>
+            <Link to="/">Back to Home</Link>
+        </div>     
     )
 }
 
-export default Deleted;
+export default RecentlyDeleted;

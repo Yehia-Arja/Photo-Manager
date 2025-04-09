@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import * as photoManager from './photoManager.js'
+import * as photoManager from './utils/enums/photoManager.js';
 
 
 const fileName = fileURLToPath(import.meta.url);
