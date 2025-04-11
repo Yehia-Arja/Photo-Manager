@@ -1,5 +1,5 @@
-import photoSlice from './photoSlice';
-import { configureStore } from '@reduxjs/toolkit';
+import photoSlice from "./photoSlice.js";
+import { configureStore } from "@reduxjs/toolkit";
 
 
 

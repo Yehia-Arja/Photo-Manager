@@ -1,14 +1,14 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/home'
-import './App.css'
-import Deleted from './pages/deleted'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Home from "./pages/home"
+import "./App.css"
+import RecentlyDeleted from "./pages/RecentlyDeleted"
 
 function App() {
   
   return (
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/deleted" element={<Deleted />} />
+        <Route path="/deleted" element={<RecentlyDeleted />} />
       </Routes>
   )
 }

@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { app } from 'electron';
-import { dialog } from 'electron';
+import { app, dialog } from 'electron';
 
 
 const photosDir = path.join(app.getPath('userData'), `photos`);
@@ -23,7 +22,9 @@ if (!fs.existsSync(photosDir)) {
 export const getPhotos = (type) => {
     try {
         const dir = dirs[type] ?? null;
-        !dir && console.error('Invalid directory type:', type);
+        if (!dir) {
+            throw new Error('Invalid directory type');
+        }
         const files = fs.readdirSync(dir);
         return files.map(file => path.join(dir, file));
     }catch (error) {
@@ -34,14 +35,12 @@ export const getPhotos = (type) => {
 
 export const addPhoto = (photoPath) => {
     try {
-        
         const originalName = path.basename(photoPath);
         const now = Date.now();
         const newName = `${now}-${originalName}`;
         const destination = path.join(photosDir, newName);        
         fs.copyFileSync(photoPath, destination);
         return destination;
-
     } catch (error) {
         console.error('Error saving photo:', error);
         throw error;
