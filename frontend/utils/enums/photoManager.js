@@ -26,6 +26,7 @@ export const getPhotos = (type) => {
             throw new Error('Invalid directory type');
         }
         const files = fs.readdirSync(dir);
+
         return files.map(file => path.join(dir, file));
     }catch (error) {
         console.error('Error reading photos:', error);
@@ -40,6 +41,7 @@ export const addPhoto = (photoPath) => {
         const newName = `${now}-${originalName}`;
         const destination = path.join(photosDir, newName);        
         fs.copyFileSync(photoPath, destination);
+        
         return destination;
     } catch (error) {
         console.error('Error saving photo:', error);
@@ -52,6 +54,7 @@ export const softDelete = (photoPath) => {
         const photoName = path.basename(photoPath);
         const destination = path.join(deletedDir, photoName);
         fs.renameSync(photoPath, destination);
+
         return destination;
     } catch (error) {
         console.error('Error moving photo to recently deleted folder:', error);
@@ -64,6 +67,7 @@ export const restorePhoto = (photoPath) => {
         const photoName = path.basename(photoPath);
         const destination = path.join(photosDir, photoName);
         fs.renameSync(photoPath, destination);
+
         return destination;
     } catch (error) {
         console.error('Error restoring photo:', error);
@@ -85,5 +89,6 @@ export const getPath = async () => {
         properties: ['openFile'],
         filters: [{ name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif'] }],
     });
+    
     return result.canceled ? null : result.filePaths[0];
 };
