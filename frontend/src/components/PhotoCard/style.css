@@ -1,0 +1,47 @@
+.photo-card {
+    width: 320px;
+    height: 176px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.photo-card .photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+}
+
+
+.photo-card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: rgba(128, 128, 128, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo-card:hover .overlay {
+    opacity: 1;
+}
+
+.photo-card .overlay button {
+    padding: 8px;
+    border: none;
+    background: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+}

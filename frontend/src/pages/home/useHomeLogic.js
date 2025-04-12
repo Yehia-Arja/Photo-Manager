@@ -18,6 +18,7 @@ const useHomeLogic = () => {
         handleGetPhotos();
     }, []);
 
+       
     const handleAddPhoto = () => {
         dispatch(addPhotoThunk());
     };
@@ -30,7 +31,6 @@ const useHomeLogic = () => {
         photos,
         loading,
         error,
-        handleGetPhotos,
         handleAddPhoto,
         handleSoftDelete,
     };
