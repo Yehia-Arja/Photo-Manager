@@ -1,0 +1,69 @@
+.navBar-container {
+    width: 100%;
+}
+
+.navBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #1c1c1c;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.navBar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navBar-logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.navBar-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+
+.burger-container {
+    position: relative;
+    display: inline-block;
+}
+
+
+.burger-menu {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #444;
+    border: 1px solid #222;
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+}
+
+
+.dropdown-item {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    white-space: nowrap;
+}
+.dropdown-item:hover {
+    background-color: #555;
+}
