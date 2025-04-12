@@ -19,7 +19,7 @@ const Home = () => {
                                 onClick: () => handleSoftDelete(photoPath),
                             },
                             {
-                                label: "Restore",
+                                label: "Edit",
                                 onClick: () => handleSoftDelete(photoPath),
                             }
                         ]}
