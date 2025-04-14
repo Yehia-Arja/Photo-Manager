@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/home"
 import "./App.css"
-import RecentlyDeleted from "./pages/RecentlyDeleted"
+import RecentlyDeleted from "./pages/recentlyDeleted"
 import Nav from "./components/NavBar"
+import "react-image-crop/dist/ReactCrop.css";
 
 function App() {
   

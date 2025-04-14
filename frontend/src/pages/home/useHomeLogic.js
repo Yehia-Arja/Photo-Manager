@@ -27,6 +27,7 @@ const useHomeLogic = () => {
         dispatch(softDeletePhotoThunk(photoPath));
     };
 
+
     return {
         photos,
         loading,
