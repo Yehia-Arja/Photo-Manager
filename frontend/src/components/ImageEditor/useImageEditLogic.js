@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 
-const useEditLogic = (initialSrc ,onSave, onCancel ) => {
+const useEditLogic = (initialSrc ,onSave ) => {
 	const [previewUrl, setPreviewUrl] = useState(initialSrc);
 	const imageRef = useRef(null);
 
@@ -16,8 +16,7 @@ const useEditLogic = (initialSrc ,onSave, onCancel ) => {
 		previewUrl,
 		setPreviewUrl,
         imageRef,
-        handleSave,
-        onCancel,
+        handleSave
 	};
 };
 
