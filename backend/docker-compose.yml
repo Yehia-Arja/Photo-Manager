@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   server:
-    build: ./backend
+    build: .
     volumes:
       - ./backend:/var/www/html
     environment:
