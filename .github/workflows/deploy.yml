@@ -29,6 +29,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd ~/Photo-Manager
+            cd ~/Photo-Manager/backend
             sudo docker pull yehiaarja/laravel-app
             sudo docker compose up -d
