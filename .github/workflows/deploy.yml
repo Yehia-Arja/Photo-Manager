@@ -15,7 +15,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Laravel Docker image
-        run: docker build -t yehiaarja/laravel-app .
+        run: docker build -t yehiaarja/laravel-app ./backend
 
       - name: Push to Docker Hub
         run: |
