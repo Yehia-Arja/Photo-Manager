@@ -41,7 +41,16 @@ const PhotoService = {
         } catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
+
+
+    saveEditedImage: async (photoPath, base64Data) => {
+        try {
+            return await window.electronAPI.saveEditedImage(photoPath, base64Data);
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };
 
 export default PhotoService;

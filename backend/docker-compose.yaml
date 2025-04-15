@@ -27,3 +27,12 @@ services:
       PMA_PORT: 3306
     depends_on:
       - database
+
+  chat:
+    build: ./chat-server
+    container_name: chat-server
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - database
