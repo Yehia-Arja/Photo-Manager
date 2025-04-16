@@ -1,16 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Traits;
 
-trait ApiResponse {
-    public static function success($data = null, $message = null, $code = 200) {
+
+trait ApiResponseTrait {
+    public function successResponse($data = null, $message = null, $code = 200) {
         return response()->json([
             'success' => true,
             'data' => $data,
             'message' => $message
         ], $code);
     }
-    public static function error($error = null, $code = 400) {
+    public function errorResponse($error = null, $code = 400) {
         return response()->json([
             'success' => false,
             'error' => $error

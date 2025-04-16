@@ -3,8 +3,6 @@ version: "3.8"
 services:
   server:
     build: .
-    volumes:
-      - .:/var/www/html
     environment:
       - LARAVEL_DATABASE_HOST=database
       - LARAVEL_DATABASE_NAME=photo_manager
@@ -14,12 +12,15 @@ services:
     restart: always
     ports:
       - "8000:80"
+    depends_on:
+      - database
 
   database:
     image: mysql:8.0
     environment:
       - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=photo_manager
+    restart: always
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

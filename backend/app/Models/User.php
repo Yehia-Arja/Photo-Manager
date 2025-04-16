@@ -30,19 +30,14 @@ class User extends Authenticatable implements JWTSubject {
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+     *
 
-     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed

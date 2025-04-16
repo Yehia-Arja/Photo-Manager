@@ -9,6 +9,7 @@ use App\Http\Controllers\LogController;
 Route::group(["prefix" => "v0.1"], function () {
 
     Route::group(["prefix" => "guest"], function () {
+        Route::get('/ping', fn() => response()->json(['pong' => true]));
         Route::post("/register", [AuthController::class, "register"]);
         Route::post("/login", [AuthController::class, "login"]);
     });
